@@ -9,9 +9,11 @@ describe('schemats cli tool integration testing', () => {
             }
         })
         it('should run without error', () => {
+            const url = process.env.POSTGRES_URL
+            if (!url) { throw Error('process.env.POSTGRES_URL must be set') }
             let {status, stdout, stderr} = spawnSync('node', [
                 'bin/schemats', 'generate',
-                '-c', process.env.POSTGRES_URL,
+                '-c', url,
                 '-o', '/tmp/schemats_cli_postgres.ts'
             ], { encoding: 'utf-8' })
             console.log('opopopopop', stdout, stderr)
@@ -25,9 +27,11 @@ describe('schemats cli tool integration testing', () => {
             }
         })
         it('should run without error', () => {
+            const url = process.env.MYSQL_URL
+            if (!url) { throw Error('process.env.MYSQL_URL must be set') }
             let {status} = spawnSync('node', [
                 'bin/schemats', 'generate',
-                '-c', process.env.MYSQL_URL,
+                '-c', url,
                 '-s', 'test',
                 '-o', '/tmp/schemats_cli_postgres.ts'
             ])
